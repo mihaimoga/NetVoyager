@@ -229,7 +229,7 @@ DWORD WINAPI PING_ThreadProc(LPVOID lpParam)
 
 	_stprintf_s(g_lpszOutputString, _countof(g_lpszOutputString) - 1, _T("Pinging %s with %u bytes of data"), theApp.m_sHostToResolve.GetString(), theApp.m_wDataRequestSize);
 	TRACE(_T("%s\n"), g_lpszOutputString);
-	pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, (int)_tcslen(g_lpszOutputString)).GetString());
+	pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, static_cast<int>(_tcslen(g_lpszOutputString))).GetString());
 	// pNetVoyagerView->m_pWebBrowser->Reload();
 
 	while (g_bThreadRunning)
@@ -277,7 +277,7 @@ DWORD WINAPI PING_ThreadProc(LPVOID lpParam)
 				else
 					_stprintf_s(g_lpszOutputString, _countof(g_lpszOutputString) - 1, _T("Reply from %s [%s]: %s"), theApp.AddressToString(pAddress, nAddressLen, NI_NUMERICHOST, nullptr).GetString(), sHost.GetString(), theApp.GetIpErrorString(nEchoReplyStatus).GetString());
 				TRACE(_T("%s\n"), g_lpszOutputString);
-				pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, (int)_tcslen(g_lpszOutputString)).GetString());
+				pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, static_cast<int>(_tcslen(g_lpszOutputString))).GetString());
 				// pNetVoyagerView->m_pWebBrowser->Reload();
 			}
 			else
@@ -288,7 +288,7 @@ DWORD WINAPI PING_ThreadProc(LPVOID lpParam)
 				else
 					_stprintf_s(g_lpszOutputString, _countof(g_lpszOutputString) - 1, _T("Reply from %s: %s"), theApp.AddressToString(pAddress, nAddressLen, NI_NUMERICHOST, nullptr).GetString(), theApp.GetIpErrorString(nEchoReplyStatus).GetString());
 				TRACE(_T("%s\n"), g_lpszOutputString);
-				pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, (int)_tcslen(g_lpszOutputString)).GetString());
+				pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, static_cast<int>(_tcslen(g_lpszOutputString))).GetString());
 				// pNetVoyagerView->m_pWebBrowser->Reload();
 			}
 		}
@@ -297,7 +297,7 @@ DWORD WINAPI PING_ThreadProc(LPVOID lpParam)
 			const DWORD dwError{ GetLastError() };
 			_stprintf_s(g_lpszOutputString, _countof(g_lpszOutputString) - 1, _T("%s"), theApp.GetErrorMessage(dwError).GetString());
 			TRACE(_T("%s\n"), g_lpszOutputString);
-			pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, (int)_tcslen(g_lpszOutputString)).GetString());
+			pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, static_cast<int>(_tcslen(g_lpszOutputString))).GetString());
 			// pNetVoyagerView->m_pWebBrowser->Reload();
 		}
 
@@ -337,7 +337,7 @@ bool CMyTraceRoute::OnSingleHostResult(int nHostNum, const CHostTraceMultiReplyv
 			_stprintf_s(g_lpszOutputString, _countof(g_lpszOutputString) - 1, _T("  %d\t%s\t%s\t%s\t%s [%s]"), nHostNum, theApp.RTTAsString(htmr.minRTT).GetString(), theApp.RTTAsString(htmr.avgRTT).GetString(),
 				theApp.RTTAsString(htmr.maxRTT).GetString(), sHost.GetString(), sIPAddress.GetString());
 			TRACE(_T("%s\n"), g_lpszOutputString);
-			m_pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, (int)_tcslen(g_lpszOutputString)).GetString());
+			m_pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, static_cast<int>(_tcslen(g_lpszOutputString))).GetString());
 			// pNetVoyagerView->m_pWebBrowser->Reload();
 		}
 		else
@@ -345,7 +345,7 @@ bool CMyTraceRoute::OnSingleHostResult(int nHostNum, const CHostTraceMultiReplyv
 			_stprintf_s(g_lpszOutputString, _countof(g_lpszOutputString) - 1, _T("  %d\t%s\t%s\t%s\t%s"), nHostNum, theApp.RTTAsString(htmr.minRTT).GetString(), theApp.RTTAsString(htmr.avgRTT).GetString(),
 				theApp.RTTAsString(htmr.maxRTT).GetString(), sIPAddress.GetString());
 			TRACE(_T("%s\n"), g_lpszOutputString);
-			m_pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, (int)_tcslen(g_lpszOutputString)).GetString());
+			m_pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, static_cast<int>(_tcslen(g_lpszOutputString))).GetString());
 			// pNetVoyagerView->m_pWebBrowser->Reload();
 		}
 	}
@@ -356,7 +356,7 @@ bool CMyTraceRoute::OnSingleHostResult(int nHostNum, const CHostTraceMultiReplyv
 		else
 			_stprintf_s(g_lpszOutputString, _countof(g_lpszOutputString) - 1, _T("  %d\t*\t*\t*\tError:%s"), nHostNum, theApp.GetErrorMessage(htmr.dwError).GetString());
 		TRACE(_T("%s\n"), g_lpszOutputString);
-		m_pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, (int)_tcslen(g_lpszOutputString)).GetString());
+		m_pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, static_cast<int>(_tcslen(g_lpszOutputString))).GetString());
 		// pNetVoyagerView->m_pWebBrowser->Reload();
 	}
 	return true;
@@ -378,7 +378,7 @@ bool CMyTraceRoute::OnSingleHostResult(int nHostNum, const CHostTraceMultiReplyv
 			_stprintf_s(g_lpszOutputString, _countof(g_lpszOutputString) - 1, _T("  %d\t%s\t%s\t%s\t%s [%s]"), nHostNum, theApp.RTTAsString(htmr.minRTT).GetString(), theApp.RTTAsString(htmr.avgRTT).GetString(),
 				theApp.RTTAsString(htmr.maxRTT).GetString(), sHost.GetString(), sIPAddress.GetString());
 			TRACE(_T("%s\n"), g_lpszOutputString);
-			m_pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, (int)_tcslen(g_lpszOutputString)).GetString());
+			m_pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, static_cast<int>(_tcslen(g_lpszOutputString))).GetString());
 			// pNetVoyagerView->m_pWebBrowser->Reload();
 		}
 		else
@@ -386,7 +386,7 @@ bool CMyTraceRoute::OnSingleHostResult(int nHostNum, const CHostTraceMultiReplyv
 			_stprintf_s(g_lpszOutputString, _countof(g_lpszOutputString) - 1, _T("  %d\t%s\t%s\t%s\t%s"), nHostNum, theApp.RTTAsString(htmr.minRTT).GetString(), theApp.RTTAsString(htmr.avgRTT).GetString(),
 				theApp.RTTAsString(htmr.maxRTT).GetString(), sIPAddress.GetString());
 			TRACE(_T("%s\n"), g_lpszOutputString);
-			m_pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, (int)_tcslen(g_lpszOutputString)).GetString());
+			m_pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, static_cast<int>(_tcslen(g_lpszOutputString))).GetString());
 			// pNetVoyagerView->m_pWebBrowser->Reload();
 		}
 	}
@@ -397,7 +397,7 @@ bool CMyTraceRoute::OnSingleHostResult(int nHostNum, const CHostTraceMultiReplyv
 		else
 			_stprintf_s(g_lpszOutputString, _countof(g_lpszOutputString) - 1, _T("  %d\t*\t*\t*\tError:%s"), nHostNum, theApp.GetErrorMessage(htmr.dwError).GetString());
 		TRACE(_T("%s\n"), g_lpszOutputString);
-		m_pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, (int)_tcslen(g_lpszOutputString)).GetString());
+		m_pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, static_cast<int>(_tcslen(g_lpszOutputString))).GetString());
 		// pNetVoyagerView->m_pWebBrowser->Reload();
 	}
 	return true;
@@ -412,7 +412,7 @@ DWORD WINAPI TRACE_ThreadProc(LPVOID lpParam)
 #pragma warning(suppress: 26472)
 	_stprintf_s(g_lpszOutputString, _countof(g_lpszOutputString) - 1, _T("Tracing route to %s over a maximum of %d hops:"), theApp.m_sHostToResolve.GetString(), static_cast<int>(theApp.m_nHopCount));
 	TRACE(_T("%s\n"), g_lpszOutputString);
-	pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, (int)_tcslen(g_lpszOutputString)).GetString());
+	pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, static_cast<int>(_tcslen(g_lpszOutputString))).GetString());
 	// pNetVoyagerView->m_pWebBrowser->Reload();
 
 	// Do the actual trace route
@@ -435,7 +435,7 @@ DWORD WINAPI TRACE_ThreadProc(LPVOID lpParam)
 			_stprintf_s(g_lpszOutputString, _countof(g_lpszOutputString) - 1, _T("%s"), theApp.GetErrorMessage(GetLastError()).GetString());
 	}
 	TRACE(_T("%s\n"), g_lpszOutputString);
-	pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, (int)_tcslen(g_lpszOutputString)).GetString());
+	pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, static_cast<int>(_tcslen(g_lpszOutputString))).GetString());
 	// pNetVoyagerView->m_pWebBrowser->Reload();
 
 	return 0;
@@ -579,8 +579,8 @@ void CNetVoyagerView::ExportDocument()
 		pHtmlFile << "<body>\n";
 		pHtmlFile << "<div class=\"container\">\n";
 		pHtmlFile << "<div id=\"row\">\n";
-		// for (int i = (int)m_arrDocumentText.size() - 1; i >= 0; i--)
-		for (int i = 0; i < (int)m_arrDocumentText.size(); i++)
+		// for (int i = static_cast<int>(m_arrDocumentText.size()) - 1; i >= 0; i--)
+		for (int i = 0; i < static_cast<int>(m_arrDocumentText.size()); i++)
 			pHtmlFile << m_arrDocumentText[i] << "<br>\n";
 		pHtmlFile << "</div>\n";
 		pHtmlFile << "</div>\n";
