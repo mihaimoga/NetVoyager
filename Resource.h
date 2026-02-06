@@ -31,7 +31,9 @@
 #define PNG_WRITELARGE                  308
 #define PNG_WRITESMALL                  309
 #define IDD_INPUTBOX                    310
+#define IDD_PLEASEWAIT                  311
 #define IDC_HOSTNAME                    1000
+#define IDC_PROGRESS                    1001
 #define ID_WRITE_PASTEASHYPERLINK       32770
 #define ID_PING                         32771
 #define ID_TRACE_ROUTE                  32772
@@ -41,9 +43,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        311
+#define _APS_NEXT_RESOURCE_VALUE        312
 #define _APS_NEXT_COMMAND_VALUE         32774
-#define _APS_NEXT_CONTROL_VALUE         1001
-#define _APS_NEXT_SYMED_VALUE           311
+#define _APS_NEXT_CONTROL_VALUE         1002
+#define _APS_NEXT_SYMED_VALUE           312
 #endif
 #endif

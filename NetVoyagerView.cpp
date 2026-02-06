@@ -27,6 +27,7 @@ NetVoyager. If not, see <http://www.opensource.org/licenses/gpl-3.0.html>*/
 #include "NetVoyagerDoc.h"
 #include "NetVoyagerView.h"
 #include "InputBox.h"
+#include "PleaseWait.h"
 #include "ping.h"
 #include "tracer.h"
 #include <filesystem>
@@ -227,10 +228,9 @@ DWORD WINAPI PING_ThreadProc(LPVOID lpParam)
 	CNetVoyagerView* pNetVoyagerView = reinterpret_cast<CNetVoyagerView*>(lpParam);
 	ASSERT(pNetVoyagerView != nullptr);
 
-	_stprintf_s(g_lpszOutputString, _countof(g_lpszOutputString) - 1, _T("Pinging %s with %u bytes of data"), theApp.m_sHostToResolve.GetString(), theApp.m_wDataRequestSize);
+	_stprintf_s(g_lpszOutputString, _countof(g_lpszOutputString) - 1, _T("Pinging <strong>%s</strong> with %u bytes of data"), theApp.m_sHostToResolve.GetString(), theApp.m_wDataRequestSize);
 	TRACE(_T("%s\n"), g_lpszOutputString);
 	pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, static_cast<int>(_tcslen(g_lpszOutputString))).GetString());
-	// pNetVoyagerView->m_pWebBrowser->Reload();
 
 	while (g_bThreadRunning)
 	{
@@ -278,7 +278,6 @@ DWORD WINAPI PING_ThreadProc(LPVOID lpParam)
 					_stprintf_s(g_lpszOutputString, _countof(g_lpszOutputString) - 1, _T("Reply from %s [%s]: %s"), theApp.AddressToString(pAddress, nAddressLen, NI_NUMERICHOST, nullptr).GetString(), sHost.GetString(), theApp.GetIpErrorString(nEchoReplyStatus).GetString());
 				TRACE(_T("%s\n"), g_lpszOutputString);
 				pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, static_cast<int>(_tcslen(g_lpszOutputString))).GetString());
-				// pNetVoyagerView->m_pWebBrowser->Reload();
 			}
 			else
 			{
@@ -289,7 +288,6 @@ DWORD WINAPI PING_ThreadProc(LPVOID lpParam)
 					_stprintf_s(g_lpszOutputString, _countof(g_lpszOutputString) - 1, _T("Reply from %s: %s"), theApp.AddressToString(pAddress, nAddressLen, NI_NUMERICHOST, nullptr).GetString(), theApp.GetIpErrorString(nEchoReplyStatus).GetString());
 				TRACE(_T("%s\n"), g_lpszOutputString);
 				pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, static_cast<int>(_tcslen(g_lpszOutputString))).GetString());
-				// pNetVoyagerView->m_pWebBrowser->Reload();
 			}
 		}
 		else
@@ -298,7 +296,6 @@ DWORD WINAPI PING_ThreadProc(LPVOID lpParam)
 			_stprintf_s(g_lpszOutputString, _countof(g_lpszOutputString) - 1, _T("%s"), theApp.GetErrorMessage(dwError).GetString());
 			TRACE(_T("%s\n"), g_lpszOutputString);
 			pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, static_cast<int>(_tcslen(g_lpszOutputString))).GetString());
-			// pNetVoyagerView->m_pWebBrowser->Reload();
 		}
 
 		// Prepare for the next loop around?
@@ -338,7 +335,6 @@ bool CMyTraceRoute::OnSingleHostResult(int nHostNum, const CHostTraceMultiReplyv
 				theApp.RTTAsString(htmr.maxRTT).GetString(), sHost.GetString(), sIPAddress.GetString());
 			TRACE(_T("%s\n"), g_lpszOutputString);
 			m_pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, static_cast<int>(_tcslen(g_lpszOutputString))).GetString());
-			// pNetVoyagerView->m_pWebBrowser->Reload();
 		}
 		else
 		{
@@ -346,7 +342,6 @@ bool CMyTraceRoute::OnSingleHostResult(int nHostNum, const CHostTraceMultiReplyv
 				theApp.RTTAsString(htmr.maxRTT).GetString(), sIPAddress.GetString());
 			TRACE(_T("%s\n"), g_lpszOutputString);
 			m_pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, static_cast<int>(_tcslen(g_lpszOutputString))).GetString());
-			// pNetVoyagerView->m_pWebBrowser->Reload();
 		}
 	}
 	else
@@ -357,7 +352,6 @@ bool CMyTraceRoute::OnSingleHostResult(int nHostNum, const CHostTraceMultiReplyv
 			_stprintf_s(g_lpszOutputString, _countof(g_lpszOutputString) - 1, _T("  %d\t*\t*\t*\tError:%s"), nHostNum, theApp.GetErrorMessage(htmr.dwError).GetString());
 		TRACE(_T("%s\n"), g_lpszOutputString);
 		m_pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, static_cast<int>(_tcslen(g_lpszOutputString))).GetString());
-		// pNetVoyagerView->m_pWebBrowser->Reload();
 	}
 	return true;
 }
@@ -379,7 +373,6 @@ bool CMyTraceRoute::OnSingleHostResult(int nHostNum, const CHostTraceMultiReplyv
 				theApp.RTTAsString(htmr.maxRTT).GetString(), sHost.GetString(), sIPAddress.GetString());
 			TRACE(_T("%s\n"), g_lpszOutputString);
 			m_pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, static_cast<int>(_tcslen(g_lpszOutputString))).GetString());
-			// pNetVoyagerView->m_pWebBrowser->Reload();
 		}
 		else
 		{
@@ -387,7 +380,6 @@ bool CMyTraceRoute::OnSingleHostResult(int nHostNum, const CHostTraceMultiReplyv
 				theApp.RTTAsString(htmr.maxRTT).GetString(), sIPAddress.GetString());
 			TRACE(_T("%s\n"), g_lpszOutputString);
 			m_pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, static_cast<int>(_tcslen(g_lpszOutputString))).GetString());
-			// pNetVoyagerView->m_pWebBrowser->Reload();
 		}
 	}
 	else
@@ -398,7 +390,6 @@ bool CMyTraceRoute::OnSingleHostResult(int nHostNum, const CHostTraceMultiReplyv
 			_stprintf_s(g_lpszOutputString, _countof(g_lpszOutputString) - 1, _T("  %d\t*\t*\t*\tError:%s"), nHostNum, theApp.GetErrorMessage(htmr.dwError).GetString());
 		TRACE(_T("%s\n"), g_lpszOutputString);
 		m_pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, static_cast<int>(_tcslen(g_lpszOutputString))).GetString());
-		// pNetVoyagerView->m_pWebBrowser->Reload();
 	}
 	return true;
 }
@@ -410,10 +401,9 @@ DWORD WINAPI TRACE_ThreadProc(LPVOID lpParam)
 
 	// Print the intro comment
 #pragma warning(suppress: 26472)
-	_stprintf_s(g_lpszOutputString, _countof(g_lpszOutputString) - 1, _T("Tracing route to %s over a maximum of %d hops:"), theApp.m_sHostToResolve.GetString(), static_cast<int>(theApp.m_nHopCount));
+	_stprintf_s(g_lpszOutputString, _countof(g_lpszOutputString) - 1, _T("Tracing route to <strong>%s</strong> over a maximum of %d hops:"), theApp.m_sHostToResolve.GetString(), static_cast<int>(theApp.m_nHopCount));
 	TRACE(_T("%s\n"), g_lpszOutputString);
 	pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, static_cast<int>(_tcslen(g_lpszOutputString))).GetString());
-	// pNetVoyagerView->m_pWebBrowser->Reload();
 
 	// Do the actual trace route
 	CTraceRoute::CReplyv4 trrv4;
@@ -436,7 +426,6 @@ DWORD WINAPI TRACE_ThreadProc(LPVOID lpParam)
 	}
 	TRACE(_T("%s\n"), g_lpszOutputString);
 	pNetVoyagerView->AddDocumentText(W2UTF8(g_lpszOutputString, static_cast<int>(_tcslen(g_lpszOutputString))).GetString());
-	// pNetVoyagerView->m_pWebBrowser->Reload();
 
 	return 0;
 }
@@ -480,6 +469,12 @@ void CNetVoyagerView::OnPing()
 			SetDocumentPath(NewDocumentPath());
 			ExportDocument();
 
+			CPleaseWait dlgPleaseWait(this);
+			VERIFY(dlgPleaseWait.Create(IDD_PLEASEWAIT, this));
+			dlgPleaseWait.m_ctrlProgress.SetMarquee(TRUE, 40);
+			dlgPleaseWait.CenterWindow();
+			dlgPleaseWait.ShowWindow(SW_SHOW);
+
 			HANDLE hThread = ::CreateThread(
 				NULL,
 				0,
@@ -494,6 +489,8 @@ void CNetVoyagerView::OnPing()
 			CString strURL(g_lpszOutputString);
 			strURL.Replace(_T("\\"), _T("/"));
 			m_pWebBrowser->Navigate(g_lpszOutputString, nullptr);
+
+			VERIFY(dlgPleaseWait.DestroyWindow());
 
 			g_bThreadRunning = false;
 		}
@@ -520,6 +517,12 @@ void CNetVoyagerView::OnTraceRoute()
 			SetDocumentPath(NewDocumentPath());
 			ExportDocument();
 
+			CPleaseWait dlgPleaseWait(this);
+			VERIFY(dlgPleaseWait.Create(IDD_PLEASEWAIT, this));
+			dlgPleaseWait.m_ctrlProgress.SetMarquee(TRUE, 40);
+			dlgPleaseWait.CenterWindow();
+			dlgPleaseWait.ShowWindow(SW_SHOW);
+
 			HANDLE hThread = ::CreateThread(
 				NULL,
 				0,
@@ -534,6 +537,8 @@ void CNetVoyagerView::OnTraceRoute()
 			CString strURL(g_lpszOutputString);
 			strURL.Replace(_T("\\"), _T("/"));
 			m_pWebBrowser->Navigate(g_lpszOutputString, nullptr);
+
+			VERIFY(dlgPleaseWait.DestroyWindow());
 
 			g_bThreadRunning = false;
 		}
