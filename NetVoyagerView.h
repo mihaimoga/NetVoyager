@@ -70,6 +70,11 @@ public:
 	void AddDocumentText(const std::string strNewDocText) { m_arrDocumentText.push_back(strNewDocText); ExportDocument(); }
 	void ExportDocument();
 
+private:
+	void WriteHtmlHeader(std::ofstream& file);
+	void WriteHtmlBody(std::ofstream& file);
+	void WriteHtmlFooter(std::ofstream& file);
+
 	DECLARE_MESSAGE_MAP()
 };
 
