@@ -150,6 +150,9 @@
     <Image Include="res\writesmall.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="NetVoyager.png" />
+    <Image Include="NetVoyager-Ping.png" />
+    <Image Include="NetVoyager-Traceroute.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\ribbon.mfcribbon-ms">
@@ -159,6 +162,9 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="packages.config" />
+    <None Include="NetVoyager.html" />
+    <None Include="ReleaseNotes.html" />
+    <None Include="SoftwareContentRegister.html" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="$(MSBuildThisFileDirectory)..\..\natvis\wil.natvis" />

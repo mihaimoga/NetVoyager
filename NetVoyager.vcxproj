@@ -231,6 +231,9 @@
     <ResourceCompile Include="NetVoyager.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="NetVoyager-Ping.png" />
+    <Image Include="NetVoyager-Traceroute.png" />
+    <Image Include="NetVoyager.png" />
     <Image Include="res\buttons.bmp" />
     <Image Include="res\filelarge.bmp" />
     <Image Include="res\filelarge.png" />
@@ -247,9 +250,12 @@
     <Image Include="res\writesmall.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="NetVoyager.html" />
     <None Include="packages.config" />
+    <None Include="ReleaseNotes.html" />
     <None Include="res\NetVoyager.rc2" />
     <None Include="res\ribbon.mfcribbon-ms" />
+    <None Include="SoftwareContentRegister.html" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

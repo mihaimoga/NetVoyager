@@ -136,7 +136,7 @@ BOOL CNetVoyagerApp::InitInstance()
 	EnableTaskbarInteraction(FALSE);
 
 	// AfxInitRichEdit2() is required to use RichEdit control
-	// AfxInitRichEdit2();
+	AfxInitRichEdit2();
 
 	// Standard initialization
 	// If you are not using these features and wish to reduce the size
@@ -191,12 +191,12 @@ BOOL CNetVoyagerApp::InitInstance()
 		return FALSE;
 
 	// The one and only window has been initialized, so show and update it
+	// Note: Window is hidden (SW_HIDE) - application runs in system tray
+	m_pMainWnd->ShowWindow(SW_SHOW);
+	m_pMainWnd->UpdateWindow();
 	// m_pMainWnd->MoveWindow(CRect(0, 0, 814, 607));
 	// m_pMainWnd->CenterWindow();
-	// Make the main window visible
-	m_pMainWnd->ShowWindow(SW_SHOW);
-	// Force window update
-	m_pMainWnd->UpdateWindow();
+
 	return TRUE;
 }
 
