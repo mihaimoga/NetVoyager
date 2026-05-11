@@ -238,9 +238,6 @@ void CNetVoyagerView::OnInitialUpdate()
 					{
 						GetDocument()->SetTitle(title);
 					}
-
-					// Update main window title
-					AfxGetMainWnd()->SetWindowText(title);
 				});
 			});
 	}
