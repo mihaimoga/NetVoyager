@@ -15,8 +15,10 @@ NetVoyager. If not, see <http://www.opensource.org/licenses/gpl-3.0.html>*/
 
 #pragma once
 
-// CInputBox dialog
-
+/**
+ * @class CInputBox
+ * @brief Dialog for entering a hostname and network operation options.
+ */
 class CInputBox : public CDialogEx
 {
 	DECLARE_DYNAMIC(CInputBox)
@@ -31,7 +33,10 @@ public:
 #endif
 
 public:
-	CString m_strHostname;
+	CString m_strHostname;                  ///< Target hostname or IP address
+	BOOL m_bResolveAddressesToHostnames;    ///< If TRUE, resolve IP addresses to hostnames
+	BOOL m_bIPv6;                           ///< If TRUE, use IPv6 instead of IPv4
+
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 

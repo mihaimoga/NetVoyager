@@ -13,31 +13,46 @@ or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
 You should have received a copy of the GNU General Public License along with
 NetVoyager. If not, see <http://www.opensource.org/licenses/gpl-3.0.html>*/
 
-// InputBox.cpp : implementation file
-//
+/**
+ * @file InputBox.cpp
+ * @brief Implements the CInputBox dialog for entering a hostname and network operation options.
+ */
 
 #include "pch.h"
 #include "NetVoyager.h"
 #include "InputBox.h"
 
-// CInputBox dialog
-
 IMPLEMENT_DYNAMIC(CInputBox, CDialogEx)
 
+/**
+ * @brief Constructs a CInputBox dialog.
+ * @param pParent Parent window pointer.
+ */
 CInputBox::CInputBox(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_INPUTBOX, pParent)
 	, m_strHostname(_T(""))
+	, m_bResolveAddressesToHostnames(FALSE)
+	, m_bIPv6(FALSE)
 {
 }
 
+/**
+ * @brief Destructor.
+ */
 CInputBox::~CInputBox()
 {
 }
 
+/**
+ * @brief Exchanges data between the dialog controls and member variables.
+ * @param pDX Pointer to the data exchange object.
+ */
 void CInputBox::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_HOSTNAME, m_strHostname);
+	DDX_Check(pDX, IDC_RESOLVE_ADDRESSES, m_bResolveAddressesToHostnames);
+	DDX_Check(pDX, IDC_FORCE_IPV6, m_bIPv6);
 }
 
 BEGIN_MESSAGE_MAP(CInputBox, CDialogEx)

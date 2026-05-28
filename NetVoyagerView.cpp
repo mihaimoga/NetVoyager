@@ -591,6 +591,8 @@ void CNetVoyagerView::OnPing()
 			// Set thread running flag
 			g_bThreadRunning = true;
 			theApp.m_sHostToResolve = pInputBox.m_strHostname;
+			theApp.m_bResolveAddressesToHostnames = pInputBox.m_bResolveAddressesToHostnames; // propagate resolve option
+			theApp.m_bIPv6 = pInputBox.m_bIPv6;                                              // propagate IPv6 option
 
 			// Clear previous results
 			if (m_arrDocumentText.size() > 0)
@@ -658,6 +660,8 @@ void CNetVoyagerView::OnTraceRoute()
 			// Set thread running flag
 			g_bThreadRunning = true;
 			theApp.m_sHostToResolve = pInputBox.m_strHostname;
+			theApp.m_bResolveAddressesToHostnames = pInputBox.m_bResolveAddressesToHostnames; // propagate resolve option
+			theApp.m_bIPv6 = pInputBox.m_bIPv6;                                              // propagate IPv6 option
 
 			// Clear previous results
 			if (m_arrDocumentText.size() > 0)
