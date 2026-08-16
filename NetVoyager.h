@@ -34,36 +34,40 @@ public:
 	CNetVoyagerApp() noexcept;
 
 	// Our specific command line options
-	CString m_sHostToResolve;
-	CString m_sLocalBoundAddress;
-	bool m_bResolveAddressesToHostnames;
-	bool m_bPingTillStopped;
-	int m_nRequestsToSend;
-	UCHAR m_nTTL;
-	UCHAR m_nTOS;
-	WORD m_wDataRequestSize;
-	DWORD m_dwTimeout;
-	bool m_bDontFragment;
-	bool m_bIPv6;
-	UCHAR m_nHopCount;
-	UCHAR m_nPings;
+	CString m_sHostToResolve;           // Hostname or IP address to ping/trace
+	CString m_sLocalBoundAddress;       // Local interface address to bind the socket to (empty = default)
+	bool m_bResolveAddressesToHostnames; // When true, reverse-resolve IP addresses to hostnames in results
+	bool m_bPingTillStopped;            // When true, ping continuously until the user stops; otherwise use m_nRequestsToSend
+	int m_nRequestsToSend;              // Number of ICMP echo requests to send (used when m_bPingTillStopped is false)
+	UCHAR m_nTTL;                       // Time-To-Live value set on outgoing packets (limits hop count)
+	UCHAR m_nTOS;                       // Type-Of-Service / DSCP byte for QoS prioritisation
+	WORD m_wDataRequestSize;            // Payload size (bytes) of each ICMP echo request
+	DWORD m_dwTimeout;                  // Per-request timeout in milliseconds before treating as a loss
+	bool m_bDontFragment;               // When true, sets the DF (Don't Fragment) bit on IP packets
+	bool m_bIPv6;                       // When true, use ICMPv6 / IPv6; otherwise use ICMPv4 / IPv4
+	UCHAR m_nHopCount;                  // Maximum number of hops (TTL limit) for traceroute
+	UCHAR m_nPings;                     // Number of probes sent per hop during traceroute
 
 // Overrides
 public:
-	virtual BOOL InitInstance();
-	virtual int ExitInstance();
+	virtual BOOL InitInstance();    // Application startup: initialises controls, sockets, OLE and the document template
+	virtual int ExitInstance();     // Application shutdown: releases OLE resources and calls base cleanup
 
 // Implementation
+	// Converts a socket address structure to a human-readable IP address string
 	static CString AddressToString(const SOCKADDR* pSockAddr, int nSockAddrLen, int nFlags, UINT* pnSocketPort);
+	// Returns the system error message for a Win32 error code
 	static CString GetErrorMessage(DWORD dwError);
+	// Formats a round-trip time value as a string (e.g. "<1ms" or "25ms")
 	static CString RTTAsString(DWORD dwRTT);
+	// Returns the descriptive string for an IP_STATUS error code from the ICMP API
 	static CString GetIpErrorString(IP_STATUS dwError);
 
-	virtual void PreLoadState();
-	virtual void LoadCustomState();
-	virtual void SaveCustomState();
+	virtual void PreLoadState();    // Called before state is loaded; registers the edit context menu
+	virtual void LoadCustomState(); // Hook for restoring additional persisted application state
+	virtual void SaveCustomState(); // Hook for persisting additional application state
 
-	afx_msg void OnAppAbout();
+	afx_msg void OnAppAbout();      // Displays the About dialog in response to Help > About
 	DECLARE_MESSAGE_MAP()
 };
 

@@ -20,11 +20,13 @@ NetVoyager. If not, see <http://www.opensource.org/licenses/gpl-3.0.html>*/
 #pragma once
 
 
+// CNetVoyagerDoc: MFC document class for the NetVoyager application.
+// Manages the application's data model within the document/view architecture.
 class CNetVoyagerDoc : public CDocument
 {
 protected: // create from serialization only
-	CNetVoyagerDoc() noexcept;
-	DECLARE_DYNCREATE(CNetVoyagerDoc)
+	CNetVoyagerDoc() noexcept; // Protected constructor; instances are created via MFC dynamic creation
+	DECLARE_DYNCREATE(CNetVoyagerDoc) // Enables runtime dynamic creation of this class
 
 // Attributes
 public:
@@ -34,27 +36,27 @@ public:
 
 // Overrides
 public:
-	virtual BOOL OnNewDocument();
-	virtual void Serialize(CArchive& ar);
+	virtual BOOL OnNewDocument();  // Called by the framework when a new document is created
+	virtual void Serialize(CArchive& ar); // Saves or loads document data to/from a file archive
 #ifdef SHARED_HANDLERS
-	virtual void InitializeSearchContent();
-	virtual void OnDrawThumbnail(CDC& dc, LPRECT lprcBounds);
+	virtual void InitializeSearchContent(); // Populates searchable content for Windows Search indexing
+	virtual void OnDrawThumbnail(CDC& dc, LPRECT lprcBounds); // Renders a thumbnail preview of the document
 #endif // SHARED_HANDLERS
 
 // Implementation
 public:
-	virtual ~CNetVoyagerDoc();
+	virtual ~CNetVoyagerDoc(); // Destructor; releases any resources held by the document
 #ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+	virtual void AssertValid() const; // Validates internal state of the document object (debug only)
+	virtual void Dump(CDumpContext& dc) const; // Dumps diagnostic information to the debug output (debug only)
 #endif
 
 // Generated message map functions
 protected:
-	DECLARE_MESSAGE_MAP()
+	DECLARE_MESSAGE_MAP() // Declares the MFC message map for this class
 
 #ifdef SHARED_HANDLERS
 	// Helper function that sets search content for a Search Handler
-	void SetSearchContent(const CString& value);
+	void SetSearchContent(const CString& value); // Registers document text with Windows Search via a filter chunk
 #endif // SHARED_HANDLERS
 };
