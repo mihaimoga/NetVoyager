@@ -250,6 +250,7 @@
     <Image Include="res\writesmall.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="AGENTS.md" />
     <None Include="NetVoyager.html" />
     <None Include="packages.config" />
     <None Include="ReleaseNotes.html" />
