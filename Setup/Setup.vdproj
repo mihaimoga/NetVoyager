@@ -141,6 +141,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -571,15 +579,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:NetVoyager"
-        "ProductCode" = "8:{E9BE0A7E-F1AD-4FB6-9EAA-2BE72B7973EF}"
-        "PackageCode" = "8:{3C17C0AE-A7F4-4C5E-B8DA-263BCBA7F5F8}"
+        "ProductCode" = "8:{B65D9473-C2DC-4997-81DF-5C78BBD97C94}"
+        "PackageCode" = "8:{4C2DDC20-BBA4-436B-B295-C2AD826787D0}"
         "UpgradeCode" = "8:{5E59FE3B-608D-4461-935B-2D3468AC3DAB}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.03"
+        "ProductVersion" = "8:1.02"
         "Manufacturer" = "8:Stefan-Mihai MOGA"
         "ARPHELPTELEPHONE" = "8:+40745497982"
         "ARPHELPLINK" = "8:https://www.moga.doctor/"
