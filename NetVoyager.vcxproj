@@ -253,6 +253,7 @@
     <None Include="AGENTS.md" />
     <None Include="NetVoyager.html" />
     <None Include="packages.config" />
+    <None Include="README.md" />
     <None Include="ReleaseNotes.html" />
     <None Include="res\NetVoyager.rc2" />
     <None Include="res\ribbon.mfcribbon-ms" />

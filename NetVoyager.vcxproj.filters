@@ -166,6 +166,7 @@
     <None Include="ReleaseNotes.html" />
     <None Include="SoftwareContentRegister.html" />
     <None Include="AGENTS.md" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="$(MSBuildThisFileDirectory)..\..\natvis\wil.natvis" />
