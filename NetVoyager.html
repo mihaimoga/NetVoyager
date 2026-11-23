@@ -66,6 +66,62 @@
 						<li><strong>Ping</strong> with live latency, packet loss, and summary stats.<br><img class="img-thumbnail" src="NetVoyager-Ping.png" alt="NetVoyager"></li>
 						<li><strong>Traceroute</strong> to visualize the path to any host and identify slow or unreachable hops.<br><img class="img-thumbnail" src="NetVoyager-Traceroute.png" alt="NetVoyager"></li>
 					</ul>
+
+					<h2>Roadmap</h2>
+					<p>These are ideas for future versions of <em>NetVoyager</em>, not commitments, and none of them has a release date. If you would like to work on one of them, please see the next section and open or comment on an issue first.</p>
+
+					<h3>Export results to JSON or CSV</h3>
+					<p>Today a run exists only as formatted text in the results page. Exporting will let you save it, compare it over time, attach it to a ticket or open it in a spreadsheet.</p>
+					<ul>
+						<li><strong>Ping</strong>: one record per echo request with the sequence number, UTC timestamp, target, replying address, host name (when reverse DNS is enabled), packet size, round-trip time and status.</li>
+						<li><strong>Traceroute</strong>: one record per hop with the hop number, address, host name, minimum, average and maximum round-trip time, and a status (reply, timed out or error).</li>
+						<li><strong>Run details and summary</strong>: the <em>NetVoyager</em> version, start and end time, probe type, target, IP version and the settings in use, plus the number of requests sent, received and lost, the loss percentage and the minimum, average and maximum round-trip time.</li>
+						<li><strong>Formats</strong>: JSON (UTF-8, with a schema version and <code>null</code> for missing values) and CSV (RFC 4180, UTF-8 with a byte order mark so that Excel opens it correctly, and <code>.</code> as the decimal separator whatever your regional settings are).</li>
+						<li><strong>Timeouts are never exported as 0</strong>: a request that timed out has an empty (CSV) or <code>null</code> (JSON) round-trip time, while a reply shown as <code>&lt;1ms</code> is exported as <code>0</code>.</li>
+						<li><strong>Commands</strong>: <strong>Export CSV…</strong> and <strong>Export JSON…</strong> on the <strong>Home</strong> tab, available when a run has finished and no ping or traceroute is running.</li>
+					</ul>
+					<p>Text that comes from the network or from the system, such as host names and error messages, is escaped for each format, and CSV text cells that a spreadsheet could interpret as a formula are neutralized. Command-line or scheduled export, XLSX/XML and exporting while a run is still in progress are out of scope for a first version.</p>
+					<p><strong>Done when:</strong> the files open cleanly in a spreadsheet and in a JSON parser, the values match the screen for IPv4 and IPv6 runs of both probes, and timeouts are never shown as 0.</p>
+
+					<h3>Dark theme and accessibility improvements</h3>
+					<p>The window and the results page stay light whatever the Windows app mode is, and some parts of the interface, such as the links in the About dialog, cannot be reached from the keyboard.</p>
+					<h4>Dark theme</h4>
+					<ul>
+						<li>A <strong>System</strong> (default), <strong>Light</strong> or <strong>Dark</strong> setting, remembered between sessions and applied without restarting.</li>
+						<li>With <strong>System</strong>, <em>NetVoyager</em> follows the Windows app mode at startup and when it changes while the application is running.</li>
+						<li>The results page follows the chosen theme, without a white flash while a page loads.</li>
+						<li>The ribbon, status bar and window frame (including a dark title bar) follow the theme and step aside when a Windows high-contrast theme is active. Standard dialogs may stay light in a first version.</li>
+						<li>Open questions: the start page is a remote page that the application cannot theme, so it may be replaced by a local themed page, and the results page loads Bootstrap from a CDN and is unstyled when you are offline, so a small bundled stylesheet may be added.</li>
+					</ul>
+					<h4>Accessibility</h4>
+					<ul>
+						<li><strong>Keyboard</strong>: shortcut keys and ribbon KeyTips for <strong>Ping</strong> and <strong>Traceroute</strong>, About dialog links that can be reached with <kbd>Tab</kbd> and activated with <kbd>Enter</kbd> or <kbd>Space</kbd>, and access keys in the hostname prompt.</li>
+						<li><strong>Results as a table</strong>: ping samples and traceroute hops written as a real HTML table with a caption and header cells, so that columns line up and screen readers can announce the row and column of each value.</li>
+						<li><strong>Announcements</strong>: the start, completion and failure of a run are available to screen readers, and the <em>Please wait</em> dialog gets a text label.</li>
+						<li><strong>Contrast and scaling</strong>: at least 4.5:1 text contrast in both themes, support for Windows high-contrast themes and forced colors, an evaluation of per-monitor DPI awareness, and a check of the results page at 200 % zoom.</li>
+						<li><strong>Testing</strong> with Narrator, NVDA and Accessibility Insights for Windows.</li>
+					</ul>
+					<p><strong>Done when:</strong> every command is reachable from the keyboard, results are exposed as a table, automated accessibility checks report no failures, the application is readable in both themes and under a high-contrast theme, and the theme follows Windows at startup and when it changes.</p>
+
+					<h3>Continuous Integration (GitHub Actions)</h3>
+					<p>The repository has no automated build yet. <em>NetVoyager</em> has four build configurations (Debug and Release for x64 and Win32) and needs a specific toolchain (Visual Studio 2026, MSVC v145 and statically linked MFC), so a change that breaks one configuration is easy to miss.</p>
+					<ul>
+						<li>A GitHub Actions workflow runs on pushes, pull requests and on demand, on a hosted Windows runner image that includes Visual Studio 2026 and is named explicitly so that the toolchain does not change silently.</li>
+						<li>It restores the NuGet packages (WebView2 and the Windows Implementation Library), then builds <code>NetVoyager.vcxproj</code> for <code>Debug|x64</code>, <code>Release|x64</code>, <code>Debug|Win32</code> and <code>Release|Win32</code>. MSBuild cannot build the installer project, so the MSI stays a manual step until the installer moves to something MSBuild can build.</li>
+						<li>The Release <code>NetVoyager.exe</code> and <code>WebView2Loader.dll</code> are uploaded as workflow artifacts.</li>
+						<li>The workflow uses read-only repository permissions and pinned actions, which Dependabot keeps up to date. New WebView2 versions, a recurring item in the release notes, are reported by Dependabot if it supports this native project, or by a scheduled job.</li>
+						<li>It begins by failing only on build errors and then tightens for new code-analysis warnings; once stable, the check is required before a pull request can be merged.</li>
+						<li>Later: CodeQL for C++, a tag-triggered release workflow that also produces the portable zip, and a build status badge.</li>
+					</ul>
+					<p><strong>Done when:</strong> a pull request that breaks any of the four configurations shows a failing check, and a successful run on the default branch produces downloadable Release artifacts.</p>
+
+					<h3>How the ideas fit together</h3>
+					<ul>
+						<li><strong>Continuous Integration</strong> is independent of the others and guards every change that follows, so it is a good first step.</li>
+						<li><strong>Export</strong> introduces a structured copy of each run's results, which the accessible results table can reuse.</li>
+						<li><strong>Dark theme</strong> is independent of both and can proceed in parallel.</li>
+					</ul>
+
 					<h2>Create and Submit your Pull Request</h2>
 					<p>As noted in the <a href="https://github.com/mihaimoga/NetVoyager/blob/main/CONTRIBUTING.md" target="_blank">Contributing Rules</a> for <em>NetVoyager</em>, all Pull Requests need to be attached to a issue on GitHub. So the first step is to create an issue which requests that the functionality be improved (if it was already there) or added (if it was not yet there); in your issue, be sure to explain that you have the functionality definition ready, and will be submitting a Pull Request. The second step is to use the GitHub interface to create the Pull Request from your fork into the main repository. The final step is to wait for and respond to feedback from the developers as needed, until such time as your PR is accepted or rejected.</p>
 				</div>
